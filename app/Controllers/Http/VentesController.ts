@@ -54,9 +54,11 @@ export default class VentesController {
 
   public async detailVenteByIdVente({ request, response }) {
     try {
-      const produit = await Database.query()
-        .from("detail_ventes")
-        .where("id_vente", request.params().id_vente);
+      const produit = await Database.from("detail_ventes")
+        .where("detail_ventes.id_vente", request.params().id_vente)
+        .join("produits", "produits.id", "detail_ventes.id_produit")
+        .select("detail_ventes.*", "produits.libelle");
+
       return response.accepted({
         status: true,
         data: produit,
