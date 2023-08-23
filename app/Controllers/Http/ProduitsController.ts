@@ -1,12 +1,14 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import Database from "@ioc:Adonis/Lucid/Database";
 import Produit from "App/Models/Produit"
 import ResponseBody from "App/Models/ResponseBody"
 import ProduitRegistrationValidator from "App/Validators/ProduitRegistrationValidator"
 
 export default class ProduitsController {
   public async list({ response }) {
-    const produit = await Produit.all()
+    const produit = await Database.from("produits").join("param_ventes", "produits.id", "param_ventes.id_produit")
+    .select("produits.*", "param_ventes.prix_vente_unique");
 
     /// generation de response
     const responseBody = new ResponseBody
