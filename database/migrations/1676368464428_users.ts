@@ -5,7 +5,7 @@ export default class extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').primary()
+      table.bigIncrements('id').primary()
       table.string('email', 255).notNullable().unique()
       table.string('password', 180).notNullable()
       table.integer('role', 1).notNullable().defaultTo(1) /// default caissier

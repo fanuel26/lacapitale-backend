@@ -30,6 +30,7 @@ Route.group(() => {
   /// route pour les produit
   Route.group(() => {
     Route.get('/list', 'ProduitsController.list')
+    Route.get('/statistique', 'ProduitsController.Statistique')
     Route.get('/getById/:id', 'ProduitsController.listById')
     Route.post('/save', 'ProduitsController.save')
     Route.put('/update/:id', 'ProduitsController.update')

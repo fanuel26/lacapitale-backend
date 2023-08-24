@@ -8,6 +8,9 @@ export default class ResponseBody extends BaseModel {
   public data: any
 
   @column()
+  public dataSecond: any
+
+  @column()
   public message: string
 
   // public async generateResponse(responseBody: ResponseBody) {

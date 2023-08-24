@@ -5,10 +5,10 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.integer('id_vente').notNullable().unsigned().references('id').inTable('ventes').onDelete('CASCADE')
-      table.integer('id_user').notNullable().unsigned().references('id').inTable('users').onDelete('CASCADE')
-      table.integer('id_produit').notNullable().unsigned().references('id').inTable('produits').onDelete('CASCADE')
+      table.bigIncrements('id')
+      table.bigInteger('id_vente').notNullable().unsigned().references('id').inTable('ventes').onDelete('CASCADE')
+      table.bigInteger('id_user').notNullable().unsigned().references('id').inTable('users').onDelete('CASCADE')
+      table.bigInteger('id_produit').notNullable().unsigned().references('id').inTable('produits').onDelete('CASCADE')
       table.integer('qte', 11).notNullable()
       table.integer('prix_total', 11).notNullable()
 
