@@ -9,7 +9,7 @@ export default class Produit extends BaseModel {
   public libelle: string
 
   @column()
-  public nbrRestant: number
+  public stock: number
 
   @column()
   public prixVente: number

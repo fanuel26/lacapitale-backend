@@ -102,6 +102,8 @@ export default class LotProduitsController {
       return data;
     }
 
+    let pd = await Produit.query().where('id', request.body().id_produit).firstOrFail()
+
     const produit = new LotProduit();
     produit.id_produit = request.body().id_produit;
     produit.qte = request.body().qte;
@@ -110,6 +112,12 @@ export default class LotProduitsController {
 
     try {
       await produit.save();
+
+      let dataUpade = {
+        stock: pd.stock + request.body().qte
+      }
+      await Produit.query().where('id', request.params().id).update(dataUpade)
+
       return response.accepted({
         status: true,
         data: produit,

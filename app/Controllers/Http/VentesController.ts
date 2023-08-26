@@ -2,6 +2,7 @@
 
 import Database from "@ioc:Adonis/Lucid/Database";
 import DetailVente from "App/Models/DetailVente";
+import Produit from "App/Models/Produit";
 import ResponseBody from "App/Models/ResponseBody";
 import Vente from "App/Models/Vente";
 import VenteRegistrationValidator from "App/Validators/VenteRegistrationValidator";
@@ -102,8 +103,15 @@ export default class VentesController {
           av.qte = addVentes[i].qte;
           av.prix_total = addVentes[i].prix_total;
 
+
+          let pd = await Produit.query().where('id', addVentes[i].id_produit).firstOrFail()
           try {
             await av.save();
+
+            let dataUpade = {
+              stock: pd.stock - addVentes[i].qte
+            }
+            await Produit.query().where('id', request.params().id).update(dataUpade)
           } catch {
             console.log("error add vente");
           }
