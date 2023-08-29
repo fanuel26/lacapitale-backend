@@ -105,13 +105,14 @@ export default class VentesController {
 
 
           let pd = await Produit.query().where('id', addVentes[i].id_produit).firstOrFail()
+
+          let dataUpade = {
+            stock: pd.stock - addVentes[i].qte
+          }
           try {
             await av.save();
 
-            let dataUpade = {
-              stock: pd.stock - addVentes[i].qte
-            }
-            await Produit.query().where('id', request.params().id).update(dataUpade)
+            await Produit.query().where('id', addVentes[i].id_produit).update(dataUpade)
           } catch {
             console.log("error add vente");
           }

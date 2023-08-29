@@ -116,7 +116,7 @@ export default class LotProduitsController {
       let dataUpade = {
         stock: pd.stock + request.body().qte
       }
-      await Produit.query().where('id', request.params().id).update(dataUpade)
+      await Produit.query().where('id', request.body().id_produit).update(dataUpade)
 
       return response.accepted({
         status: true,
