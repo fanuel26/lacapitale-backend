@@ -134,19 +134,39 @@ export default class LotProduitsController {
 
   public async update({ request, response }) {
     try {
+      let data = {
+        qte: request.body().qte,
+        prix_achat: request.body().prix_achat
+      }
       await LotProduit.query()
         .where("id", request.params().id)
-        .update(request.body());
+        .update(data);
       const produit_value = await LotProduit.query().where(
         "id",
         request.params().id
       );
 
-      return response.accepted({
-        status: true,
-        data: produit_value,
-        message: "Mise a jour effectuer avec success",
-      });
+
+      let pd = await Produit.query().where('id', request.body().id_produit).firstOrFail()
+
+      let dataUpade = {
+        stock: pd.stock + request.body().diff
+      }
+
+      try {
+        await Produit.query().where('id', request.body().id_produit).update(dataUpade)
+
+        return response.accepted({
+          status: true,
+          data: produit_value,
+          message: "Mise a jour effectuer avec success",
+        });
+      } catch {
+        return response.accepted({
+          status: false,
+          message: "erreur lors de la mise a jour! level 2",
+        });
+      }
     } catch {
       return response.accepted({
         status: false,
